@@ -1,1 +1,611 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>OUT Club Tour 2026</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@700;800;900&family=Inter:wght@400;500;600;700&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#07150e',
+              card: '#0d2217',
+              surface: '#112c1e',
+              border: '#1b3f2c',
+              lime: '#ccff00',
+              limeDark: '#99cc00',
+              court: '#184430'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Cabinet Grotesk', 'Oswald', 'sans-serif'],
+            condensed: ['Oswald', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #07150e;
+      color: #ffffff;
+      -webkit-tap-highlight-color: transparent;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .custom-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .text-glow {
+      text-shadow: 0 0 16px rgba(204, 255, 0, 0.4);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between pb-24 antialiased selection:bg-brand-lime selection:text-black">
+
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-40 bg-brand-dark/95 backdrop-blur border-b border-brand-border/60 px-4 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <!-- Клубный логотип -->
+      <div class="relative flex items-center justify-center w-10 h-10 bg-brand-card rounded-xl border border-brand-border p-1.5 shadow-inner">
+        <svg class="w-full h-full text-brand-lime" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <path d="M2 12h20M12 4v16M6 4v16M18 4v16" stroke-opacity="0.3"/>
+          <circle cx="17" cy="7" r="2.5" fill="#ccff00" stroke="none" />
+        </svg>
+      </div>
+      <div>
+        <div class="font-display font-black text-xl tracking-tight leading-none text-white flex items-center gap-1.5">
+          OUT <span class="text-xs font-semibold px-1.5 py-0.5 rounded bg-brand-lime/10 text-brand-lime font-mono">CLUB</span>
+        </div>
+        <div class="text-[10px] tracking-widest text-slate-400 uppercase font-semibold mt-0.5">TENNIS TOUR</div>
+      </div>
+    </div>
+
+
+    <div class="flex items-center gap-2">
+      <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-brand-surface border border-brand-border text-brand-lime">
+        СЕЗОН 2026
+      </span>
+      <button onclick="toggleMenu()" class="p-2 text-slate-300 hover:text-white rounded-lg hover:bg-brand-surface transition">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </header>
+
+
+  <!-- SIDEBAR / DRAWER MENU -->
+  <div id="sideMenu" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden transition-opacity">
+    <div class="absolute right-0 top-0 bottom-0 w-4/5 max-w-sm bg-brand-card border-l border-brand-border p-6 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between pb-6 border-b border-brand-border">
+          <div class="font-display font-bold text-lg text-white">Меню тура</div>
+          <button onclick="toggleMenu()" class="p-1 text-slate-400 hover:text-white">
+            <i data-lucide="x" class="w-6 h-6"></i>
+          </button>
+        </div>
+
+
+        <nav class="mt-6 space-y-2">
+          <button onclick="showRules(); toggleMenu()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-brand-surface/60 hover:bg-brand-surface text-left font-medium text-slate-200 transition">
+            <i data-lucide="book-open" class="w-5 h-5 text-brand-lime"></i>
+            Регламент и начисление очков
+          </button>
+          <a href="https://t.me" target="_blank" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-brand-surface text-slate-300 transition">
+            <i data-lucide="send" class="w-5 h-5 text-sky-400"></i>
+            Telegram-канал клуба
+          </a>
+          <button onclick="toggleMenu()" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-brand-surface text-slate-300 transition">
+            <i data-lucide="map-pin" class="w-5 h-5 text-amber-400"></i>
+            Локации кортов
+          </button>
+        </nav>
+      </div>
+
+
+      <div class="text-xs text-slate-500 text-center font-mono">
+        OUT Tennis Club • 2026<br>
+        пгт. Усть-Кинельский
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 w-full max-w-lg mx-auto px-4 py-5">
+    
+    <!-- TAB 1: РЕЙТИНГ (LEADERBOARD) -->
+    <section id="tab-rating" class="tab-content space-y-6">
+      
+      <!-- HERO BANNER -->
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-brand-court to-brand-card border border-brand-border p-5">
+        <div class="relative z-10 flex items-start justify-between">
+          <div>
+            <div class="text-[11px] font-mono uppercase tracking-widest text-brand-lime font-bold">OUT CLUB TOUR • 2026</div>
+            <h1 class="font-display font-black text-3xl sm:text-4xl uppercase tracking-tight text-white mt-1 leading-none">
+              Борьба за<br><span class="text-brand-lime text-glow">№1 рейтинг</span>
+            </h1>
+          </div>
+          <div class="text-right">
+            <span class="font-display font-black text-3xl text-brand-lime leading-none">16</span>
+            <div class="text-[10px] uppercase font-bold text-slate-300 tracking-wider">игроков в туре</div>
+          </div>
+        </div>
+
+
+        <!-- ТОП-3 ПОДИУМ -->
+        <div class="grid grid-cols-3 gap-2 sm:gap-3 mt-6 pt-4 border-t border-brand-border/80 items-end">
+          
+          <!-- 2 МЕСТО -->
+          <div class="flex flex-col items-center text-center">
+            <div class="relative mb-2">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-slate-800 border-2 border-slate-400/80 overflow-hidden flex items-center justify-center shadow-lg">
+                <i data-lucide="user" class="w-8 h-8 text-slate-400"></i>
+              </div>
+              <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-slate-300 text-black text-[11px] font-black px-2 py-0.5 rounded-full font-mono shadow">
+                2
+              </span>
+            </div>
+            <div class="font-bold text-xs sm:text-sm text-white truncate max-w-full mt-1">Егор Б.</div>
+            <div class="font-mono font-bold text-brand-lime text-sm sm:text-base">1 715</div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">очков</div>
+          </div>
+
+
+          <!-- 1 МЕСТО -->
+          <div class="flex flex-col items-center text-center scale-105">
+            <div class="relative mb-2">
+              <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-brand-surface border-2 border-brand-lime overflow-hidden flex items-center justify-center shadow-2xl shadow-brand-lime/20">
+                <i data-lucide="trophy" class="w-10 h-10 text-brand-lime animate-pulse"></i>
+              </div>
+              <span class="absolute -bottom-2.5 left-1/2 -translate-x-1/2 bg-brand-lime text-black text-xs font-black px-2.5 py-0.5 rounded-full font-mono shadow">
+                1
+              </span>
+            </div>
+            <div class="font-bold text-sm sm:text-base text-white truncate max-w-full mt-1">Артем А.</div>
+            <div class="font-mono font-black text-brand-lime text-base sm:text-lg">2 419</div>
+            <div class="text-[10px] text-brand-lime/80 uppercase font-bold tracking-wider">лидер тура</div>
+          </div>
+
+
+          <!-- 3 МЕСТО -->
+          <div class="flex flex-col items-center text-center">
+            <div class="relative mb-2">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-amber-950/40 border-2 border-amber-600/80 overflow-hidden flex items-center justify-center shadow-lg">
+                <i data-lucide="user" class="w-8 h-8 text-amber-500"></i>
+              </div>
+              <span class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-amber-600 text-white text-[11px] font-black px-2 py-0.5 rounded-full font-mono shadow">
+                3
+              </span>
+            </div>
+            <div class="font-bold text-xs sm:text-sm text-white truncate max-w-full mt-1">Дима</div>
+            <div class="font-mono font-bold text-brand-lime text-sm sm:text-base">1 310</div>
+            <div class="text-[9px] text-slate-400 uppercase font-semibold">очков</div>
+          </div>
+
+
+        </div>
+      </div>
+
+
+      <!-- ТАБЛИЦА РЕЙТИНГА -->
+      <div class="bg-brand-card rounded-2xl border border-brand-border p-4">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="font-display font-black text-lg text-white uppercase tracking-tight">Рейтинг сезона</h2>
+            <p class="text-xs text-slate-400">Каждый турнир — шаг к трофею</p>
+          </div>
+          <button onclick="exportToCsv()" class="text-xs text-slate-400 hover:text-brand-lime flex items-center gap-1 font-mono">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i> CSV
+          </button>
+        </div>
+
+
+        <!-- ПОИСК -->
+        <div class="relative mb-3">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+          <input 
+            type="text" 
+            id="searchInput"
+            oninput="filterPlayers()"
+            placeholder="Найти игрока..." 
+            class="w-full bg-brand-surface border border-brand-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-brand-lime transition"
+          />
+        </div>
+
+
+        <!-- СПИСОК -->
+        <div class="divide-y divide-brand-border/60" id="rankingList">
+          <!-- Сюда JS генерирует строки рейтинга -->
+        </div>
+      </div>
+
+
+    </section>
+
+
+    <!-- TAB 2: ИГРОКИ (PLAYERS) -->
+    <section id="tab-players" class="tab-content hidden space-y-4">
+      <div>
+        <h2 class="font-display font-black text-2xl uppercase tracking-tight text-white">Участники тура</h2>
+        <p class="text-xs text-slate-400">Полный список теннисистов сезона 2026</p>
+      </div>
+
+
+      <div class="grid grid-cols-2 gap-3" id="playersGrid">
+        <!-- JS рендерит карточки игроков -->
+      </div>
+    </section>
+
+
+    <!-- TAB 3: ТУРНИРЫ И РАСПИСАНИЕ -->
+    <section id="tab-tournaments" class="tab-content hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="font-display font-black text-2xl uppercase tracking-tight text-white">Календарь тура</h2>
+          <p class="text-xs text-slate-400">Расписание и результаты 2026</p>
+        </div>
+      </div>
+
+
+      <!-- ФИЛЬТР: Прошедшие / Впереди -->
+      <div class="grid grid-cols-2 p-1 bg-brand-card rounded-xl border border-brand-border text-sm font-semibold">
+        <button onclick="switchTournamentsTab('past')" id="btn-tour-past" class="py-2 rounded-lg bg-brand-court text-brand-lime transition">
+          Прошедшие (14)
+        </button>
+        <button onclick="switchTournamentsTab('future')" id="btn-tour-future" class="py-2 rounded-lg text-slate-400 hover:text-white transition">
+          Впереди (5)
+        </button>
+      </div>
+
+
+      <!-- СПИСОК ТУРНИРОВ -->
+      <div class="space-y-3" id="tournamentsList">
+        <!-- JS рендерит турниры -->
+      </div>
+    </section>
+
+
+  </main>
+
+
+  <!-- MODAL: ПРАВИЛА И РЕГЛАМЕНТ -->
+  <div id="rulesModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-brand-card border border-brand-border rounded-2xl w-full max-w-lg max-h-[85vh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="px-5 py-4 border-b border-brand-border flex items-center justify-between bg-brand-surface/50">
+        <div class="font-display font-black text-lg uppercase text-white">Регламент начисления очков</div>
+        <button onclick="hideRules()" class="text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+      <div class="p-5 overflow-y-auto space-y-5 text-sm">
+        
+        <div>
+          <div class="font-bold text-brand-lime uppercase text-xs tracking-wider mb-2">1. Одиночные турниры (ОСТ 250)</div>
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="bg-brand-surface p-3 rounded-xl border border-brand-border">
+              <div class="font-bold text-white mb-1.5 border-b border-brand-border pb-1">Золотая лига</div>
+              <div class="flex justify-between py-0.5"><span>Победитель</span><b class="text-brand-lime">250</b></div>
+              <div class="flex justify-between py-0.5"><span>Финалист</span><b class="text-brand-lime">150</b></div>
+              <div class="flex justify-between py-0.5"><span>Полуфиналист</span><b class="text-brand-lime">90</b></div>
+              <div class="flex justify-between py-0.5"><span>1/4 финала</span><b class="text-brand-lime">45</b></div>
+            </div>
+            <div class="bg-brand-surface p-3 rounded-xl border border-brand-border">
+              <div class="font-bold text-white mb-1.5 border-b border-brand-border pb-1">Серебряная лига</div>
+              <div class="flex justify-between py-0.5"><span>Победитель</span><b class="text-slate-300">50</b></div>
+              <div class="flex justify-between py-0.5"><span>Финалист</span><b class="text-slate-300">30</b></div>
+              <div class="flex justify-between py-0.5"><span>Полуфиналист</span><b class="text-slate-300">15</b></div>
+              <div class="flex justify-between py-0.5"><span>1/4 финала</span><b class="text-slate-300">8</b></div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="font-bold text-brand-lime uppercase text-xs tracking-wider mb-2">2. Парные турниры (ОСТ 250)</div>
+          <div class="bg-brand-surface p-3 rounded-xl border border-brand-border text-xs space-y-1">
+            <div class="flex justify-between py-0.5"><span>Победители</span><b class="text-brand-lime">125 каждому</b></div>
+            <div class="flex justify-between py-0.5"><span>Финалисты</span><b class="text-brand-lime">75 каждому</b></div>
+            <div class="flex justify-between py-0.5"><span>3 место</span><b class="text-brand-lime">55 каждому</b></div>
+            <div class="flex justify-between py-0.5"><span>Полуфиналисты</span><b class="text-brand-lime">45 каждому</b></div>
+            <div class="flex justify-between py-0.5"><span>1/4 финала</span><b class="text-brand-lime">22 каждому</b></div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="font-bold text-brand-lime uppercase text-xs tracking-wider mb-2">3. Турниры категории ОСТ 500</div>
+          <p class="text-xs text-slate-300">
+            Для турниров ОСТ 500 очки начисляются с коэффициентом <b>x2</b> от сетки ОСТ 250 (Победитель получает 500 очков).
+          </p>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- BOTTOM TAB BAR NAVIGATION -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-brand-dark/95 backdrop-blur border-t border-brand-border px-4 py-2">
+    <div class="max-w-md mx-auto grid grid-cols-3 gap-2">
+      
+      <button onclick="switchTab('rating')" id="nav-rating" class="nav-btn flex flex-col items-center py-1.5 px-3 rounded-xl text-brand-lime transition">
+        <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+        <span class="text-[11px] font-bold mt-1">Рейтинг</span>
+      </button>
+
+
+      <button onclick="switchTab('players')" id="nav-players" class="nav-btn flex flex-col items-center py-1.5 px-3 rounded-xl text-slate-400 hover:text-white transition">
+        <i data-lucide="users" class="w-5 h-5"></i>
+        <span class="text-[11px] font-bold mt-1">Игроки</span>
+      </button>
+
+
+      <button onclick="switchTab('tournaments')" id="nav-tournaments" class="nav-btn flex flex-col items-center py-1.5 px-3 rounded-xl text-slate-400 hover:text-white transition">
+        <i data-lucide="trophy" class="w-5 h-5"></i>
+        <span class="text-[11px] font-bold mt-1">Турниры</span>
+      </button>
+
+
+    </div>
+  </nav>
+
+
+  <!-- DATA & LOGIC SCRIPT -->
+  <script>
+    // База данных участников (из твоей Google Таблицы)
+    const playersData = [
+      { rank: 1, name: "Артем Антонов", points: 2419, tours: 8 },
+      { rank: 2, name: "Егор Борисов", points: 1715, tours: 9 },
+      { rank: 3, name: "Дима", points: 1310, tours: 12 },
+      { rank: 4, name: "Арман", points: 1145, tours: 7 },
+      { rank: 5, name: "Сергей", points: 1040, tours: 12 },
+      { rank: 6, name: "Егор Сырескин", points: 630, tours: 6 },
+      { rank: 7, name: "Павел Федоренко", points: 575, tours: 9 },
+      { rank: 8, name: "Лёша А.", points: 401, tours: 9 },
+      { rank: 9, name: "Лёша К.", points: 365, tours: 5 },
+      { rank: 10, name: "Вова", points: 283, tours: 5 },
+      { rank: 11, name: "Рома", points: 274, tours: 9 },
+      { rank: 12, name: "Полина", points: 240, tours: 7 },
+      { rank: 13, name: "Тимофей", points: 220, tours: 3 },
+      { rank: 14, name: "Ленар", points: 135, tours: 4 },
+      { rank: 15, name: "Лиза", points: 70, tours: 3 },
+      { rank: 16, name: "Сергей 2", points: 55, tours: 1 }
+    ];
+
+
+    // База данных турниров (из твоей таблицы)
+    const pastTournaments = [
+      { date: "30 авг.", name: "Августовская дуэль", type: "Парный OCT 250", location: "Корт пгт. Усть-Кинельский", players: 10 },
+      { date: "18 июл.", name: "Летняя серия", type: "OCT 250", location: "Корт пгт. Усть-Кинельский", players: 8 },
+      { date: "19 июн.", name: "Середина сезона", type: "OCT 500", location: "Дубки (Демократическая)", players: 12 },
+      { date: "13 июн.", name: "Гранд Финал", type: "Парный OCT 250", location: "Корт пгт. Усть-Кинельский", players: 8 },
+      { date: "16 мая", name: "Старт лета (Финалы)", type: "OCT 500", location: "Корт пгт. Усть-Кинельский", players: 4 },
+      { date: "24 апр.", name: "Весенний финал", type: "OCT 250", location: "Дубки (Демократическая)", players: 10 },
+      { date: "11 апр.", name: "Парный турнир", type: "OCT 250", location: "Корт пгт. Усть-Кинельский", players: 8 },
+      { date: "27 мар.", name: "Клубная классика", type: "OCT 500", location: "Дубки (Демократическая)", players: 12 },
+      { date: "13 мар.", name: "Весенний кубок", type: "OCT 250", location: "Загородный парк", players: 10 },
+      { date: "13 фев.", name: "Парный вызов", type: "Парный OCT 250", location: "Дубки (Демократическая)", players: 10 },
+      { date: "30 янв.", name: "Первый вызов", type: "OCT 250", location: "Дубки (Демократическая)", players: 11 },
+      { date: "9 янв.", name: "Зимний кубок", type: "OCT 500", location: "Дубки (Демократическая)", players: 13 }
+    ];
+
+
+    const futureTournaments = [
+      { date: "Сентябрь", name: "Осенний квалификатор", type: "OCT 250", location: "Уточняется", status: "Регистрация скоро" },
+      { date: "Октябрь", name: "Осеннее первенство", type: "OCT 500", location: "Дубки", status: "В календаре" },
+      { date: "Ноябрь", name: "Финальный рывок", type: "OCT 250", location: "Дубки", status: "В календаре" },
+      { date: "Ноябрь", name: "Последний вагон", type: "OCT 250", location: "Дубки", status: "В календаре" },
+      { date: "Декабрь", name: "Финал OUT Club 2026", type: "OCT 1000", location: "Дубки", status: "Итоговый турнир" }
+    ];
+
+
+    // Рендер таблицы рейтинга
+    function renderRanking(players) {
+      const container = document.getElementById('rankingList');
+      container.innerHTML = '';
+
+
+      players.forEach((p) => {
+        let badgeColor = 'bg-brand-surface text-slate-300';
+        if (p.rank === 1) badgeColor = 'bg-brand-lime text-black font-black';
+        else if (p.rank === 2) badgeColor = 'bg-slate-300 text-black font-bold';
+        else if (p.rank === 3) badgeColor = 'bg-amber-600 text-white font-bold';
+
+
+        const row = `
+          <div class="flex items-center justify-between py-3 px-1 hover:bg-brand-surface/40 rounded-xl transition">
+            <div class="flex items-center gap-3">
+              <span class="w-6 h-6 rounded-lg ${badgeColor} text-xs flex items-center justify-center font-mono shrink-0">
+                ${p.rank}
+              </span>
+              <div class="w-9 h-9 rounded-xl bg-brand-surface border border-brand-border flex items-center justify-center text-slate-400 shrink-0 font-bold text-xs">
+                ${p.name.charAt(0)}
+              </div>
+              <div>
+                <div class="font-bold text-sm text-white">${p.name}</div>
+                <div class="text-[11px] text-slate-400 font-mono">${p.tours} турнир(ов)</div>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="font-mono font-bold text-base text-brand-lime">${p.points.toLocaleString()}</div>
+              <div class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">очков</div>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', row);
+      });
+      lucide.createIcons();
+    }
+
+
+    // Рендер карточек игроков
+    function renderPlayersGrid() {
+      const container = document.getElementById('playersGrid');
+      container.innerHTML = '';
+
+
+      playersData.forEach((p) => {
+        const card = `
+          <div class="bg-brand-card border border-brand-border rounded-2xl p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-brand-surface border border-brand-border text-brand-lime">
+                  #${p.rank}
+                </span>
+                <span class="text-[10px] text-slate-400 font-mono">${p.tours} туров</span>
+              </div>
+              <div class="w-12 h-12 rounded-xl bg-brand-surface border border-brand-border flex items-center justify-center text-brand-lime font-bold text-lg mb-2">
+                ${p.name.charAt(0)}
+              </div>
+              <div class="font-bold text-sm text-white truncate">${p.name}</div>
+            </div>
+            <div class="mt-3 pt-3 border-t border-brand-border/60 flex items-baseline justify-between">
+              <span class="text-[10px] text-slate-400 uppercase">Очки</span>
+              <span class="font-mono font-bold text-brand-lime text-base">${p.points}</span>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', card);
+      });
+    }
+
+
+    // Рендер турниров
+    let currentTourTab = 'past';
+    function renderTournaments() {
+      const container = document.getElementById('tournamentsList');
+      container.innerHTML = '';
+
+
+      const list = currentTourTab === 'past' ? pastTournaments : futureTournaments;
+
+
+      list.forEach((t) => {
+        const isPast = currentTourTab === 'past';
+        const card = `
+          <div class="bg-brand-card border border-brand-border rounded-2xl p-4 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full ${isPast ? 'bg-brand-court text-brand-lime' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'}">
+                ${t.type}
+              </span>
+              <span class="text-xs font-mono text-slate-400">${t.date}</span>
+            </div>
+            <div class="font-display font-bold text-lg text-white">${t.name}</div>
+            <div class="flex items-center justify-between text-xs text-slate-400 pt-1 border-t border-brand-border/50">
+              <div class="flex items-center gap-1 truncate">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-500 shrink-0"></i>
+                <span class="truncate">${t.location}</span>
+              </div>
+              <div class="font-mono font-semibold text-slate-300 shrink-0 ml-2">
+                ${isPast ? t.players + ' игроков' : t.status}
+              </div>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', card);
+      });
+      lucide.createIcons();
+    }
+
+
+    function switchTournamentsTab(tab) {
+      currentTourTab = tab;
+      const btnPast = document.getElementById('btn-tour-past');
+      const btnFuture = document.getElementById('btn-tour-future');
+
+
+      if (tab === 'past') {
+        btnPast.className = "py-2 rounded-lg bg-brand-court text-brand-lime transition";
+        btnFuture.className = "py-2 rounded-lg text-slate-400 hover:text-white transition";
+      } else {
+        btnFuture.className = "py-2 rounded-lg bg-brand-court text-brand-lime transition";
+        btnPast.className = "py-2 rounded-lg text-slate-400 hover:text-white transition";
+      }
+      renderTournaments();
+    }
+
+
+    // Переключение вкладок в нижнем баре
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('text-brand-lime');
+        btn.classList.add('text-slate-400');
+      });
+      document.getElementById(`nav-${tabId}`).classList.remove('text-slate-400');
+      document.getElementById(`nav-${tabId}`).classList.add('text-brand-lime');
+
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+
+    // Живой поиск
+    function filterPlayers() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = playersData.filter(p => p.name.toLowerCase().includes(q));
+      renderRanking(filtered);
+    }
+
+
+    // Меню и модалки
+    function toggleMenu() {
+      const menu = document.getElementById('sideMenu');
+      menu.classList.toggle('hidden');
+    }
+    function showRules() {
+      document.getElementById('rulesModal').classList.remove('hidden');
+    }
+    function hideRules() {
+      document.getElementById('rulesModal').classList.add('hidden');
+    }
+
+
+    // Экспорт CSV
+    function exportToCsv() {
+      let csv = "Место,Игрок,Очки,Турниры\n";
+      playersData.forEach(p => {
+        csv += `${p.rank},${p.name},${p.points},${p.tours}\n`;
+      });
+      const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'OUT_Club_Rating_2026.csv';
+      a.click();
+    }
+
+
+    // Инициализация
+    window.addEventListener('DOMContentLoaded', () => {
+      renderRanking(playersData);
+      renderPlayersGrid();
+      renderTournaments();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
