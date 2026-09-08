@@ -1,151 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Out Club Tour</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
-    <style>
-        :root {
-            --bg-color: #111;
-            --card-bg: #1e1e1e;
-            --primary: #ccff00; /* Теннисный желто-зеленый */
-            --text: #fff;
-            --text-muted: #888;
-        }
-        body {
-            background-color: var(--bg-color); color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0; padding: 0;
-        }
-        header {
-            background-color: var(--card-bg); padding: 30px 20px; text-align: center;
-            border-bottom: 2px solid var(--primary);
-        }
-        h1 { margin: 0; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
-        .accent { color: var(--primary); }
-        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-        
-        .tabs { display: flex; gap: 15px; margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 10px;}
-        .tab { 
-            padding: 10px 20px; font-size: 1.2rem; cursor: pointer; 
-            color: var(--text-muted); transition: 0.3s;
-        }
-        .tab:hover { color: var(--text); }
-        .tab.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
-        
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.5s; }
-        
-        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 8px; overflow: hidden; }
-        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #333; }
-        th { color: var(--text-muted); font-weight: normal; text-transform: uppercase; font-size: 0.9rem; }
-        tr:last-child td { border-bottom: none; }
-        tr:hover { background-color: #252525; }
-        
-        .player-info { display: flex; align-items: center; gap: 15px; }
-        .avatar { 
-            width: 45px; height: 45px; border-radius: 50%; object-fit: cover; 
-            background-color: #333; border: 2px solid var(--primary);
-        }
-        .rank { font-size: 1.2rem; font-weight: bold; width: 30px; color: var(--text-muted); }
-        .points { font-weight: bold; color: var(--primary); font-size: 1.1rem; }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>Out Club <span class="accent">Tour</span></h1>
-</header>
-
-<div class="container">
-    <div class="tabs">
-        <div class="tab active" onclick="switchTab('rating')">Рейтинг</div>
-        <div class="tab" onclick="switchTab('schedule')">Расписание</div>
-    </div>
-
-    <div id="rating" class="tab-content active">
-        <table>
-            <thead><tr><th>Игрок</th><th>Очки</th></tr></thead>
-            <tbody id="ratingTableBody">
-                <tr><td colspan="2" style="text-align:center;">Загрузка данных с корта...</td></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div id="schedule" class="tab-content">
-        <table>
-            <thead><tr><th>Дата</th><th>Турнир</th></tr></thead>
-            <tbody id="scheduleTableBody"></tbody>
-        </table>
-    </div>
-</div>
-
-<script>
-    const SHEET_ID = '1L2uvCJ6yEdkYjdjwaYewh30LTf2UjC9y0XPSXHMHGsg';
-
-    function switchTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        event.target.classList.add('active');
-    }
-
-    Papa.parse(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Рейтинг`, {
-        download: true,
-        complete: function(results) {
-            const tbody = document.getElementById('ratingTableBody');
-            tbody.innerHTML = ''; 
-            let start = false;
-            
-            results.data.forEach(row => {
-                if (row[0] && row[0].includes('Место')) { start = true; return; }
-                if (start && row[0] && parseInt(row[0])) {
-                    let photoUrl = (row[2] && row[2].startsWith('http')) ? row[2] : `https://ui-avatars.com/api/?name=${row[3]}&background=ccff00&color=000`;
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>
-                                <div class="player-info">
-                                    <div class="rank">${row[0]}</div>
-                                    <img src="${photoUrl}" class="avatar" alt="Фото">
-                                    <div style="font-size: 1.1rem;">${row[3]}</div>
-                                </div>
-                            </td>
-                            <td class="points">${row[1]}</td>
-                        </tr>
-                    `;
-                }
-            });
-        }
-    });
-
-    Papa.parse(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Расписание`, {
-        download: true,
-        complete: function(results) {
-            const tbody = document.getElementById('scheduleTableBody');
-            let start = false;
-            
-            results.data.forEach(row => {
-                if (row[0] && row[0].includes('Дата')) { start = true; return; }
-                if (start && row[0]) {
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>
-                                <div style="font-weight:bold; font-size:1.1rem;">${row[0]}</div>
-                                <div style="color:var(--text-muted); font-size:0.9rem;">${row[2] || ''}</div>
-                            </td>
-                            <td>
-                                <div style="color:var(--primary); font-weight:bold;">${row[4] || ''}</div>
-                                <div style="font-size:0.9rem;">${row[3] || ''}</div>
-                            </td>
-                        </tr>
-                    `;
-                }
-            });
-        }
-    });
-</script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+    <meta name="theme-color" content="#04271e" />
+    <meta name="application-name" content="OUT Tennis Club" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="OUT Club" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="description" content="OUT Tennis Club — игроки, рейтинг и турниры клуба." />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <title>OUT Tennis Club</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
