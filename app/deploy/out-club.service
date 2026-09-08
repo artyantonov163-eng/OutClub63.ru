@@ -1,0 +1,26 @@
+[Unit]
+Description=OUT Club private statistics
+After=network.target
+
+[Service]
+Type=simple
+User=outclub
+Group=outclub
+WorkingDirectory=/opt/out-club
+Environment=HOST=127.0.0.1
+Environment=PORT=4173
+Environment=COOKIE_SECURE=true
+Environment=TRUST_PROXY=true
+EnvironmentFile=/etc/out-club.env
+ExecStart=/usr/bin/node /opt/out-club/server/index.mjs
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/out-club/.runtime
+
+[Install]
+WantedBy=multi-user.target

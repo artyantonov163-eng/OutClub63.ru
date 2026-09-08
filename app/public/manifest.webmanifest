@@ -1,0 +1,18 @@
+{
+  "id": "/",
+  "name": "OUT Tennis Club",
+  "short_name": "OUT Club",
+  "description": "Игроки, рейтинг и турниры OUT Tennis Club",
+  "lang": "ru",
+  "start_url": "/#/ranking",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#04271e",
+  "background_color": "#04271e",
+  "prefer_related_applications": false,
+  "icons": [
+    {"src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
