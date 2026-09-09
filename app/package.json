@@ -13,7 +13,7 @@
     "test": "node --test tests/*.test.mjs",
     "import:data": "python3 scripts/import-data.py",
     "dev:client": "vite --host 127.0.0.1",
-    "test:code": "node --test tests/auth.test.mjs tests/entrypoint.test.mjs tests/pwa.test.mjs tests/sites-worker.test.mjs"
+    "test:code": "node --test tests/auth.test.mjs tests/entrypoint.test.mjs tests/pwa.test.mjs tests/sites-worker.test.mjs tests/serverless.test.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

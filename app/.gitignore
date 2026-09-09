@@ -9,3 +9,6 @@ work/
 .DS_Store
 
 verification/
+
+serverless/files.json
+function.zip
